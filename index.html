@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>JavaScript Abstraction Generator</title>
+    <style type="text/css">
+      body {
+        text-align: center;
+      }
+      #about {
+        font-size: 20px;
+        margin: 100px 0 40px 0;
+      }
+      #output {
+        font-size: 50px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="about">Need a name for your next big <strong>JavaScript</strong> abstraction? How about...</p>
+    <p id="output"></p>
+    <script type="text/javascript">
+      var MAX_PREFIXES = 2;
+      var MAX_SUFFIXES = 2;
+      var ADJECTIVE_PROB = 0.7;
+      var POST_SUFFIX_PROB = 0.2;
+
+      var ADJECTIVES = [
+        'Quick',
+        'Big'
+      ];
+
+      var PREFIXES = [
+        'Ajax',
+        'Async',
+        'Contextual',
+        'Data',
+        'Dialog',
+        'Live',
+        'Page'
+      ];
+
+      var SUFFIXES = [
+//        'Cache',
+        'Controller',
+        'Logger',
+        'Manager',
+        'Monitor',
+        'Pipe',
+        'Request',
+        'Signal',
+        'Store',
+        'Transition'
+      ];
+
+      var POST_SUFFIXES = [
+        'ling',
+        'lets'
+      ];
+
+      var string = '', index, ii;
+
+      var num_adjectives = Math.floor(Math.random() * (ADJECTIVES.length + 1));
+      var adjective_clone = ADJECTIVES.slice(0);
+      for (ii = 0; ii < num_adjectives; ii++) {
+        index = Math.floor(Math.random() * adjective_clone.length);
+        string += adjective_clone.splice(index, 1);
+      }
+
+      var num_prefixes = Math.ceil(Math.random()*MAX_PREFIXES);
+      var prefix_clone = PREFIXES.slice(0);
+      for (ii = 0; ii < num_prefixes; ii++) {
+        index = Math.floor(Math.random() * prefix_clone.length);
+        string += prefix_clone.splice(index, 1);
+      }
+      
+      var num_suffixes = Math.ceil(Math.random()*MAX_SUFFIXES);
+      var suffix_clone = SUFFIXES.slice(0);
+      for (ii = 0; ii < num_suffixes; ii++) {
+        index = Math.floor(Math.random() * suffix_clone.length);
+        string += suffix_clone.splice(index, 1);
+      }
+
+      if (Math.random() < POST_SUFFIX_PROB) {
+        string += POST_SUFFIXES[Math.floor(Math.random() * POST_SUFFIXES.length)];
+      }
+
+      document.getElementById('output').innerHTML = string;
+    </script>
+  </body>
+</html>
