@@ -20,73 +20,118 @@
   <body>
     <p id="about">Need a name for your next big <strong>JavaScript</strong> abstraction? How about...</p>
     <p id="output"></p>
+    <p id="selector">
+      <input type="checkbox" id="is_fast" onclick="isFastClicked(this)" />
+      <label for="is_fast">Is it fast?</label>
+    </p>
+
     <script type="text/javascript">
-      var MAX_PREFIXES = 2;
-      var MAX_SUFFIXES = 2;
-      var ADJECTIVE_PROB = 0.7;
-      var POST_SUFFIX_PROB = 0.2;
+      !function() {
+        var max_adjectives = 2;
+        var max_suffixes = 2;
+        var prefix_prob = 0.2;
+        var noun_prob = 0.5;
+        var post_suffix_prob = 0.2;
 
-      var ADJECTIVES = [
-        'Quick',
-        'Big'
-      ];
+        var prefixes = [
+          'Big',
+          'Early'
+        ];
 
-      var PREFIXES = [
-        'Ajax',
-        'Async',
-        'Contextual',
-        'Data',
-        'Dialog',
-        'Live',
-        'Page'
-      ];
+        var adjectives = [
+          'Ajax',
+          'Async',
+          'Contextual',
+          'Data',
+          'Live',
+          'Perf'
+        ];
 
-      var SUFFIXES = [
-//        'Cache',
-        'Controller',
-        'Logger',
-        'Manager',
-        'Monitor',
-        'Pipe',
-        'Request',
-        'Signal',
-        'Store',
-        'Transition'
-      ];
+        var nouns = [
+          'Dialog',
+          'Link',
+          'Page',
+          'Sprite'
+        ];
 
-      var POST_SUFFIXES = [
-        'ling',
-        'lets'
-      ];
+        var suffixes = [
+          'Controller',
+          'Logger',
+          'Manager',
+          // 'Monitor',
+          'Pipe',
+          'Request',
+          'Transition'
+        ];
 
-      var string = '', index, ii;
+        var post_suffixes = [
+          'ling',
+          'lets'
+        ];
 
-      var num_adjectives = Math.floor(Math.random() * (ADJECTIVES.length + 1));
-      var adjective_clone = ADJECTIVES.slice(0);
-      for (ii = 0; ii < num_adjectives; ii++) {
-        index = Math.floor(Math.random() * adjective_clone.length);
-        string += adjective_clone.splice(index, 1);
+        function pick_random(array) {
+          var index = Math.floor(Math.random() * array.length);
+          return array.splice(index, 1);
+        }
+
+        var string = '', ii, extra_suffixes = [];
+
+        if (Math.random() < prefix_prob) {
+          var num_prefixes =
+            Math.floor(Math.random() * (prefixes.length + 1));
+          for (ii = 0; ii < num_prefixes; ii++) {
+            var prefix = pick_random(prefixes);
+            if (prefix == 'Early') {
+              extra_suffixes = ['Flusher', 'Fetcher'];
+              max_suffixes -= 1;
+            }
+            string += prefix;
+          }
+        }
+
+        // Between 1 and max_adjectives adjectives
+        var num_adjectives = Math.ceil(Math.random() * max_adjectives);
+        for (ii = 0; ii < num_adjectives; ii++) {
+          string += pick_random(adjectives);
+        }
+
+        if (Math.random() <= noun_prob) {
+          string += pick_random(nouns);
+        }
+
+        // Between 1 and max_suffixes suffixes
+        var num_suffixes = Math.ceil(Math.random() * max_suffixes);
+        for (ii = 0; ii < num_suffixes; ii++) {
+          string += pick_random(suffixes);
+        }
+
+        if (Math.random() < post_suffix_prob) {
+          string += pick_random(post_suffixes);
+        }
+
+        if (extra_suffixes.length > 0) {
+          string += pick_random(extra_suffixes);
+        }
+
+        if (window.name == 'is_fast') {
+          string = 'Quick' + string;
+          document.getElementById('is_fast').checked = true;
+        }
+
+        document.getElementById('output').innerHTML = string;
+      }();
+
+      function isFastClicked(elem) {
+        var string = document.getElementById('output').innerHTML;
+        if (elem.checked) {
+          string = 'Quick' + string;
+          window.name = 'is_fast';
+        } else {
+          string = string.replace('Quick', '');
+          window.name = '';
+        }
+        document.getElementById('output').innerHTML = string;
       }
-
-      var num_prefixes = Math.ceil(Math.random()*MAX_PREFIXES);
-      var prefix_clone = PREFIXES.slice(0);
-      for (ii = 0; ii < num_prefixes; ii++) {
-        index = Math.floor(Math.random() * prefix_clone.length);
-        string += prefix_clone.splice(index, 1);
-      }
-      
-      var num_suffixes = Math.ceil(Math.random()*MAX_SUFFIXES);
-      var suffix_clone = SUFFIXES.slice(0);
-      for (ii = 0; ii < num_suffixes; ii++) {
-        index = Math.floor(Math.random() * suffix_clone.length);
-        string += suffix_clone.splice(index, 1);
-      }
-
-      if (Math.random() < POST_SUFFIX_PROB) {
-        string += POST_SUFFIXES[Math.floor(Math.random() * POST_SUFFIXES.length)];
-      }
-
-      document.getElementById('output').innerHTML = string;
     </script>
   </body>
 </html>
