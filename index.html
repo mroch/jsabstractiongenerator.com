@@ -7,9 +7,12 @@
       body {
         text-align: center;
       }
+      p {
+        margin: 40px;
+      }
       #about {
         font-size: 20px;
-        margin: 100px 0 40px 0;
+        margin-top: 100px;
       }
       #output {
         font-size: 50px;
@@ -20,9 +23,12 @@
   <body>
     <p id="about">Need a name for your next big <strong>JavaScript</strong> abstraction? How about...</p>
     <p id="output"></p>
-    <p id="selector">
+    <p>
       <input type="checkbox" id="is_fast" onclick="isFastClicked(this)" />
       <label for="is_fast">Is it fast?</label>
+    </p>
+    <p>
+      <input type="button" value="Try again" onclick="window.location.reload()" />
     </p>
 
     <script type="text/javascript">
