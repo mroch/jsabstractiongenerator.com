@@ -128,7 +128,8 @@
       }();
 
       function isFastClicked(elem) {
-        var string = document.getElementById('output').innerHTML;
+        var output = document.getElementById('output');
+        var string = output.innerHTML;
         if (elem.checked) {
           string = 'Quick' + string;
           window.name = 'is_fast';
@@ -136,7 +137,7 @@
           string = string.replace('Quick', '');
           window.name = '';
         }
-        document.getElementById('output').innerHTML = string;
+        output.innerHTML = string;
       }
     </script>
   </body>
